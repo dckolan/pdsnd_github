@@ -17,7 +17,7 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # TO DO: get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    
+
     city = input('Would you like to see date for Chicago, New York City, or Washington? ').lower()
     while city not in ['chicago', 'new york city', 'washington']:
         city = input ("Error. Would you like to see date for 'Chicago', 'New York City', or 'Washington'? ").lower()
@@ -28,14 +28,14 @@ def get_filters():
 
     if time_filter == 'month':
         day = 'none'
-        
+
     if time_filter == 'day':
         month = 'none'
-        
+
     if time_filter == 'neither':
         month = 'none'
         day = 'none'
-    
+
     if time_filter == 'both' or time_filter == 'month':
         # TO DO: get user input for month (all, january, february, ... , june)
         month = input('Which month? January, February, March, April, May, or June? ').lower()
@@ -49,7 +49,7 @@ def get_filters():
             day = input ("Error. Which day? 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', or 'Saturday'? ").lower()
 
     print('-'*40)
-    
+
     return city, time_filter, month, day
 
 def load_data(city, time_filter, month, day):
@@ -63,24 +63,24 @@ def load_data(city, time_filter, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    
+
     df = pd.read_csv(CITY_DATA[city])
-    
+
     df['Start Time'] = pd.to_datetime(df['Start Time'])
 
     df['month'] = df['Start Time'].dt.month
-    
+
     df['day_of_week'] = df['Start Time'].dt.weekday_name
-    
+
     df['hour'] = df['Start Time'].dt.hour
-    
+
     if time_filter == 'both' or time_filter == 'month':
         months = ['january', 'february', 'march', 'april', 'may', 'june']
         month = months.index(month) + 1
-    
+
     if time_filter == 'both' or time_filter == 'day':
         df = df[df['day_of_week'] == day.title()]
-        
+
     return df
 
 def time_stats(df):
@@ -171,7 +171,7 @@ def user_stats(df):
         print('Most Common Birth Year Is:', most_common_birth_year)
     except:
         pass
-        
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -186,7 +186,7 @@ def raw_data (df):
         raw = input('Do you want to see more five lines of raw data? ').lower()
         while raw not in ['yes','no']:
             raw = input ("Do you want to see five lines of raw data? Enter 'yes' or 'no'. ").lower()
-          
+
 def main():
     while True:
         city, time_filter, month, day = get_filters()
@@ -206,3 +206,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
+    
